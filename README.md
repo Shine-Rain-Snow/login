@@ -1,3 +1,4 @@
+https://appdividend.com/2018/07/18/react-redux-node-mongodb-jwt-authentication/
 <img src="https://raw.githubusercontent.com/react-boilerplate/react-boilerplate-brand/master/assets/banner-metal-optimized.jpg" alt="react boilerplate banner" align="center" />
 
 <br />

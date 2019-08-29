@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import thunk from 'redux-thunk';
 
 export default function configureStore(initialState = {}, history) {
   let composeEnhancers = compose;
@@ -39,21 +40,28 @@ export default function configureStore(initialState = {}, history) {
   const store = createStore(
     createReducer(),
     initialState,
-    composeEnhancers(...enhancers),
+    
+    applyMiddleware(thunk),
+    
+    // composeEnhancers(
+    //   ...enhancers,
+    //   applyMiddleware(thunk),
+    // )
+    // composeEnhancers(...enhancers),
   );
 
   // Extensions
-  store.runSaga = sagaMiddleware.run;
-  store.injectedReducers = {}; // Reducer registry
-  store.injectedSagas = {}; // Saga registry
+  // store.runSaga = sagaMiddleware.run;
+  //store.injectedReducers = {}; // Reducer registry
+  // store.injectedSagas = {}; // Saga registry
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
-  if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      store.replaceReducer(createReducer(store.injectedReducers));
-    });
-  }
+  // if (module.hot) {
+  //   module.hot.accept('./reducers', () => {
+  //     store.replaceReducer(createReducer(store.injectedReducers));
+  //   });
+  // }
 
   return store;
 }
